@@ -12,7 +12,7 @@ st.set_page_config(layout="wide", page_title="Movie Recommender System")
 st.title("🍿 Movie Recommender System")
 
 # Load the dataset containing movie information
-df_movies = pd.read_csv('../data/movies.csv', low_memory=False)
+df_movies = pd.read_csv('movies.csv', low_memory=False)
 
 # Function to shorten the plot text for display
 def shorten_text(text, max_sentences=3):
@@ -62,22 +62,22 @@ with info:
 
 # Display recommendations based on various criteria
 st.subheader('Recommendations based on most reviewed')
-df_most_reviewed = pd.read_csv('recommendations/recommendations-most-reviewed.csv')
+df_most_reviewed = pd.read_csv('recommendations-most-reviewed.csv')
 df_most_reviewed = df_most_reviewed.merge(df_movies, on='movieId')
 t.recommendations(df_most_reviewed.head(6))
 
 st.subheader('Recommendations based on average rating')
-df_avg_rating = pd.read_csv('recommendations/recommendations-ratings-avg.csv')
+df_avg_rating = pd.read_csv('recommendations-ratings-avg.csv')
 df_avg_rating = df_avg_rating.merge(df_movies, on='movieId')
 t.recommendations(df_avg_rating.head(6))
 
 st.subheader('Recommendations based on weighted rating')
-df_weighted_rating = pd.read_csv('recommendations/recommendations-ratings-weight.csv')
+df_weighted_rating = pd.read_csv('recommendations-ratings-weight.csv')
 df_weighted_rating = df_weighted_rating.merge(df_movies, on='movieId')
 t.recommendations(df_weighted_rating.head(6))
 
 st.subheader('Recommendations based on Frequently Reviewed Together (frequency)')
-df_freq_reviewed = pd.read_csv('recommendations/recommendations-seeded-freq.csv')
+df_freq_reviewed = pd.read_csv('recommendations-seeded-freq.csv')
 movie_id = st.session_state['movieId']
 df_recommendations = df_freq_reviewed[df_freq_reviewed['movie_a'] == movie_id].sort_values(by='count', ascending=False)
 df_recommendations = df_recommendations.rename(columns={"movie_b": "movieId"})
