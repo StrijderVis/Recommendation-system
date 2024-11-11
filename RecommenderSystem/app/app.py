@@ -12,7 +12,7 @@ st.set_page_config(layout="wide", page_title="Movie Recommender System")
 st.title("🍿 Movie Recommender System")
 
 # Load the dataset containing movie information
-df_movies = pd.read_csv('strijdervis/recommendation-system/main/RecommenderSystem/app/movies.csv', low_memory=False)
+df_movies = pd.read_csv('strijdervis/recommendation-system/main/RecommenderSystem/data/movies.csv', low_memory=False)
 
 # Function to shorten the plot text for display
 def shorten_text(text, max_sentences=3):
