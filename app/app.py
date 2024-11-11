@@ -60,6 +60,20 @@ with info:
     st.caption(f"{df_movie['Year'].iloc[0]} | {df_movie['Runtime'].iloc[0]} | {df_movie['Genre'].iloc[0]} | {df_movie['imdbRating'].iloc[0]} | {df_movie['Actors'].iloc[0]}")
     st.markdown(f"**Plot:** {shorten_text(df_movie['Plot'].iloc[0])}")
 
+st.subheader('Recommendations based on Frequently Reviewed Together (frequency)')
+df_freq_reviewed = pd.read_csv('recommendations/recommendations-seeded-freq.csv')
+movie_id = st.session_state['movieId']
+df_recommendations = df_freq_reviewed[df_freq_reviewed['movie_a'] == movie_id].sort_values(by='count', ascending=False)
+df_recommendations = df_recommendations.rename(columns={"movie_b": "movieId"})
+df_recommendations = df_recommendations.merge(df_movies, on='movieId')
+t.recommendations(df_recommendations.head(6))
+
+# Content-Based Recommendations
+st.subheader('Content-Based Recommendations')
+recommended_movies = get_content_based_recommendations(st.session_state['movieId'], df_movies, top_n=6)
+df_recommendations = recommended_movies.rename(columns={"movieId": "movieId"})
+t.recommendations(df_recommendations)
+
 # Display recommendations based on various criteria
 st.subheader('Recommendations based on most reviewed')
 df_most_reviewed = pd.read_csv('recommendations/recommendations-most-reviewed.csv')
@@ -75,17 +89,3 @@ st.subheader('Recommendations based on weighted rating')
 df_weighted_rating = pd.read_csv('recommendations/recommendations-ratings-weight.csv')
 df_weighted_rating = df_weighted_rating.merge(df_movies, on='movieId')
 t.recommendations(df_weighted_rating.head(6))
-
-st.subheader('Recommendations based on Frequently Reviewed Together (frequency)')
-df_freq_reviewed = pd.read_csv('recommendations/recommendations-seeded-freq.csv')
-movie_id = st.session_state['movieId']
-df_recommendations = df_freq_reviewed[df_freq_reviewed['movie_a'] == movie_id].sort_values(by='count', ascending=False)
-df_recommendations = df_recommendations.rename(columns={"movie_b": "movieId"})
-df_recommendations = df_recommendations.merge(df_movies, on='movieId')
-t.recommendations(df_recommendations.head(6))
-
-# Content-Based Recommendations
-st.subheader('Content-Based Recommendations')
-recommended_movies = get_content_based_recommendations(st.session_state['movieId'], df_movies, top_n=6)
-df_recommendations = recommended_movies.rename(columns={"movieId": "movieId"})
-t.recommendations(df_recommendations)
