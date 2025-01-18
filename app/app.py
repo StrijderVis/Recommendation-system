@@ -7,6 +7,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # Configure the layout of the Streamlit page to use a wide format and set a page title
 st.set_page_config(layout="wide", page_title="Movie Recommender System")
+st.set_option('client.showErrorDetails', False)
 
 # App title
 st.title("🍿 Movie Recommender System")
