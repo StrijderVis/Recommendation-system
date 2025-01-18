@@ -10,7 +10,7 @@ st.set_page_config(layout="wide", page_title="Movie Recommender System")
 
 # App title
 st.title("🍿 Movie Recommender System")
-
+st.title("test123")
 # Load the dataset containing movie information
 df_movies = pd.read_csv('data/movies.csv', low_memory=False)
 
